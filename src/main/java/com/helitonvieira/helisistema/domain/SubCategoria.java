@@ -1,20 +1,26 @@
 package com.helitonvieira.helisistema.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 @Entity
 public class SubCategoria implements Serializable{
-
 	private static final long serialVersionUID = 1L;
+	
 @Id
 @GeneratedValue(strategy=GenerationType.IDENTITY)
 
 private Integer cod_subcategoria;
 private String des_subcategoria;
+
+@ManyToMany(mappedBy="subCategorias")
+private List<Item> itens  = new ArrayList<>();
 
 public SubCategoria() {
 	}
@@ -41,6 +47,14 @@ public void setDes_subcategoria(String des_subcategoria) {
 	this.des_subcategoria = des_subcategoria;
 }
 
+public List<Item> getItens() {
+	return itens;
+}
+
+public void setItens(List<Item> itens) {
+	this.itens = itens;
+}
+
 @Override
 public int hashCode() {
 	final int prime = 31;
@@ -65,5 +79,7 @@ public boolean equals(Object obj) {
 		return false;
 	return true;
 }
+
+
 
 }
