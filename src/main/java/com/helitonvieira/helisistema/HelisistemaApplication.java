@@ -8,12 +8,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.helitonvieira.helisistema.domain.Cidade;
+import com.helitonvieira.helisistema.domain.Endereco;
 import com.helitonvieira.helisistema.domain.Estado;
 import com.helitonvieira.helisistema.domain.Item;
+import com.helitonvieira.helisistema.domain.Pessoa;
 import com.helitonvieira.helisistema.domain.SubCategoria;
+import com.helitonvieira.helisistema.domain.enums.TipoPessoa;
 import com.helitonvieira.helisistema.repositories.CidadeRepository;
+import com.helitonvieira.helisistema.repositories.EnderecoRepository;
 import com.helitonvieira.helisistema.repositories.EstadoRepository;
 import com.helitonvieira.helisistema.repositories.ItemRepository;
+import com.helitonvieira.helisistema.repositories.PessoaRepository;
 import com.helitonvieira.helisistema.repositories.SubCategoriaRepository;
 
 @SpringBootApplication
@@ -27,6 +32,10 @@ public class HelisistemaApplication implements CommandLineRunner {
 	private CidadeRepository cidadeRepository;
 	@Autowired
 	private EstadoRepository estadoRepository;
+	@Autowired
+	private PessoaRepository pessoaRepository;
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(HelisistemaApplication.class, args);
@@ -38,16 +47,13 @@ public class HelisistemaApplication implements CommandLineRunner {
 		SubCategoria cat1 = new SubCategoria(null, "Refrigerante");
 		SubCategoria cat2 = new SubCategoria(null, "Cerveja");
 
-		Item p1 = new Item(null, "Skol", 4.5, 2.2, "S");
-		Item p2 = new Item(null, "Coca lata", 14.5, 6.2, "S");
-		Item p3 = new Item(null, "Fanta Laranja", 24.5, 22.2, "S");
+		Item p1 = new Item(null, "Skol", 4.5, 2.2, "S",cat2);
+		Item p2 = new Item(null, "Coca lata", 14.5, 6.2, "S",cat1);
+		Item p3 = new Item(null, "Fanta Laranja", 24.5, 22.2, "S",cat1);
 
 		cat1.getItens().addAll(Arrays.asList(p3, p2));
 		cat2.getItens().addAll(Arrays.asList(p1));
 
-		p1.getSubCategorias().addAll(Arrays.asList(cat2));
-		p2.getSubCategorias().addAll(Arrays.asList(cat1));
-		p3.getSubCategorias().addAll(Arrays.asList(cat1));
 
 		subCategoriaRepository.saveAll(Arrays.asList(cat1, cat2));
 		itemRepository.saveAll(Arrays.asList(p1, p2, p3));
@@ -65,6 +71,22 @@ public class HelisistemaApplication implements CommandLineRunner {
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
+		Pessoa cli1 = new Pessoa(null,"Heliton Vieira","Gugu","064.146.847-22","MG11586.757","02/05/1983","Nilda","teste obs","01/01/2019","S","S","S","S",TipoPessoa.PESSOAFISICA);
+		cli1.getNum_fone().addAll(Arrays.asList("996451318","88142535"));
+		cli1.getDes_email().addAll(Arrays.asList("helitondba@gmail.com","heli.ton@hotmail.com"));
+		Endereco e1 = new Endereco(null,"Bento Gonçalves","851","casa1","Nossa Shra das Graças","38401-002",cli1,c1);
+		Endereco e2 = new Endereco(null,"Dr Munir Tanus","201","ap304","Gavea Sul","38401-002",cli1,c1);
+		cli1.getEnderecos().addAll(Arrays.asList(e1,e2));
+		
+		Pessoa cli2 = new Pessoa(null,"Juliana","juju","064.146.847-22","MG11586.757","02/05/1983","Nilda","teste obs","01/01/2019","S","S","S","N",TipoPessoa.PESSOAJURIDICA);
+		cli2.getNum_fone().addAll(Arrays.asList("91008341","88142535"));
+		cli2.getDes_email().addAll(Arrays.asList("juju@gmail.com","jujuxpd@hotmail.com"));
+		Endereco e3 = new Endereco(null,"Artesanato","851","casa1","Planalto","38401-002",cli2,c2);
+		Endereco e4 = new Endereco(null,"Dr Munir Tanus","201","ap304","Gavea Sul","38401-002",cli2,c2);
+		cli1.getEnderecos().addAll(Arrays.asList(e3,e4));
+		
+		pessoaRepository.saveAll(Arrays.asList(cli1, cli2));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2, e3,e4));
 	}
 
 }

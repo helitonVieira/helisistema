@@ -1,18 +1,13 @@
 package com.helitonvieira.helisistema.domain;
 
 import java.io.Serializable;
-//import java.util.ArrayList;
-//import java.util.List;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -31,24 +26,28 @@ public class Item implements Serializable {
 	private String ind_ativo;
     
 	@JsonBackReference
-	@ManyToMany // muitos para muitos
+	/*@ManyToMany // muitos para muitos
 	@JoinTable(name = "Produto_Subgrupo", // criar a tabela intermediaria
 			joinColumns  = @JoinColumn(name = "cod_item"),
 			inverseJoinColumns = @JoinColumn(name = "cod_subcategoria")
 	)
-	 private List<SubCategoria> subCategorias = new ArrayList<>(); 
+	 private SubCategoria subCategorias = new ArrayList<>(); */
+	@ManyToOne
+	@JoinColumn(name = "cod_subcategoria")
+	private SubCategoria cod_subcategoria; 
 	
-	 public Item() {
+	public Item() {
 
 	}
 
-	public Item(Integer cod_item, String des_item, Double val_preco_venda, Double val_custo, String ind_ativo) {
+	public Item(Integer cod_item, String des_item, Double val_preco_venda, Double val_custo, String ind_ativo, SubCategoria cod_subcategoria) {
 		super();
 		this.cod_item = cod_item;
 		this.des_item = des_item;
 		this.val_preco_venda = val_preco_venda;
 		this.val_custo = val_custo;
 		this.ind_ativo = ind_ativo;
+		this.cod_subcategoria = cod_subcategoria;
 	}
 
 	public Integer getCod_item() {
@@ -92,13 +91,12 @@ public class Item implements Serializable {
 	}
 
 	
-
-	public List<SubCategoria> getSubCategorias() {
-		return subCategorias;
+	public SubCategoria getCod_subcategoria() {
+		return cod_subcategoria;
 	}
 
-	public void setSubCategorias(List<SubCategoria> subCategorias) {
-		this.subCategorias = subCategorias;
+	public void setCod_subcategoria(SubCategoria cod_subcategoria) {
+		this.cod_subcategoria = cod_subcategoria;
 	}
 
 	@Override

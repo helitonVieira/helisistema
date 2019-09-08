@@ -7,8 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.helitonvieira.helisistema.domain.SubCategoria;
 import com.helitonvieira.helisistema.repositories.SubCategoriaRepository;
+import com.helitonvieira.helisistema.services.exceptions.ObjectNotFoundException;
 
-import javassist.tools.rmi.ObjectNotFoundException;
+
 
 @Service
 public class SubCategoriaService {
@@ -18,7 +19,7 @@ public class SubCategoriaService {
 
 	public SubCategoria buscar(Integer id)  {
 	 Optional<SubCategoria> obj = repo.findById(id);
-		return obj.orElseThrow(() -> new com.helitonvieira.helisistema.services.exceptions.ObjectNotFoundException(
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
 			 "Objeto não encontrado Codigo: " + id + ", Tipo: = " + SubCategoria.class.getName()));
 	}
 }

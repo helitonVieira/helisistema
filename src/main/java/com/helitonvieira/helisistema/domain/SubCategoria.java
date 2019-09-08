@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
@@ -22,7 +22,7 @@ private Integer cod_subcategoria;
 private String des_subcategoria;
 
 @JsonManagedReference
-@ManyToMany(mappedBy="subCategorias")
+@OneToMany(mappedBy="cod_subcategoria")
 private List<Item> itens  = new ArrayList<>();
 
 public SubCategoria() {
