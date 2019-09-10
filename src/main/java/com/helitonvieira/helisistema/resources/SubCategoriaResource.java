@@ -14,7 +14,7 @@ import com.helitonvieira.helisistema.domain.SubCategoria;
 import com.helitonvieira.helisistema.services.SubCategoriaService;
 
 @RestController
-@RequestMapping(value = "/subCategoria")
+@RequestMapping(value = "/subCategorias")
 public class SubCategoriaResource {
 
 	@Autowired

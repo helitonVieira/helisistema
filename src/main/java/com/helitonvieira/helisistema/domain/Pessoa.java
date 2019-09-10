@@ -53,6 +53,12 @@ public class Pessoa implements Serializable {
 	@ElementCollection
 	@CollectionTable(name = "Email")
 	private Set<String> des_email = new HashSet<>();
+	
+	@OneToMany(mappedBy = "cod_pessoa_cliente")
+	private List<Pedido> cod_pessoa_cliente = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "cod_pessoa_vendedor")
+	private List<Pedido> cod_pessoa_vendedor = new ArrayList<>();
 
 	public Pessoa() {
 
@@ -213,6 +219,25 @@ public class Pessoa implements Serializable {
 
 	public void setDes_email(Set<String> des_email) {
 		this.des_email = des_email;
+	}
+
+	
+	
+	public List<Pedido> getCod_pessoa_cliente() {
+		return cod_pessoa_cliente;
+	}
+
+	public void setPedidosCliente(List<Pedido> cod_pessoa_cliente) {
+		this.cod_pessoa_cliente = cod_pessoa_cliente;
+	}
+
+	
+	public List<Pedido> getCod_pessoa_vendedor() {
+		return cod_pessoa_vendedor;
+	}
+
+	public void setCod_pessoa_vendedor(List<Pedido> cod_pessoa_vendedor) {
+		this.cod_pessoa_vendedor = cod_pessoa_vendedor;
 	}
 
 	@Override

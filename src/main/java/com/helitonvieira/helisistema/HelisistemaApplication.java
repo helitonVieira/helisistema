@@ -1,5 +1,6 @@
 package com.helitonvieira.helisistema;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,20 @@ import com.helitonvieira.helisistema.domain.Cidade;
 import com.helitonvieira.helisistema.domain.Endereco;
 import com.helitonvieira.helisistema.domain.Estado;
 import com.helitonvieira.helisistema.domain.Item;
+import com.helitonvieira.helisistema.domain.PagamentoBoleto;
+import com.helitonvieira.helisistema.domain.PagamentoCartao;
+import com.helitonvieira.helisistema.domain.PagamentoPedido;
+import com.helitonvieira.helisistema.domain.Pedido;
 import com.helitonvieira.helisistema.domain.Pessoa;
 import com.helitonvieira.helisistema.domain.SubCategoria;
+import com.helitonvieira.helisistema.domain.enums.EstadoPagamento;
 import com.helitonvieira.helisistema.domain.enums.TipoPessoa;
 import com.helitonvieira.helisistema.repositories.CidadeRepository;
 import com.helitonvieira.helisistema.repositories.EnderecoRepository;
 import com.helitonvieira.helisistema.repositories.EstadoRepository;
 import com.helitonvieira.helisistema.repositories.ItemRepository;
+import com.helitonvieira.helisistema.repositories.PagamentoPedidoRepository;
+import com.helitonvieira.helisistema.repositories.PedidoRepository;
 import com.helitonvieira.helisistema.repositories.PessoaRepository;
 import com.helitonvieira.helisistema.repositories.SubCategoriaRepository;
 
@@ -36,6 +44,10 @@ public class HelisistemaApplication implements CommandLineRunner {
 	private PessoaRepository pessoaRepository;
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	@Autowired
+	private PagamentoPedidoRepository pagamentoPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(HelisistemaApplication.class, args);
@@ -87,6 +99,36 @@ public class HelisistemaApplication implements CommandLineRunner {
 		
 		pessoaRepository.saveAll(Arrays.asList(cli1, cli2));
 		enderecoRepository.saveAll(Arrays.asList(e1, e2, e3,e4));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm"); 
+		 
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1,cli2, e1); 
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1,cli2, e2);    
+		
+		cli1.getCod_pessoa_cliente().addAll(Arrays.asList(ped1, ped2)); 
+		cli2.getCod_pessoa_vendedor().addAll(Arrays.asList(ped1, ped2)); 
+		  
+		PagamentoPedido pagto1 = new PagamentoCartao(null, EstadoPagamento.QUITADO, ped1, 6); 
+		ped1.setPagamento(pagto1);    
+		PagamentoPedido pagto2 = new PagamentoBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00"), null); 
+		ped2.setPagamento(pagto2); 
+		 
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2)); 
+		pagamentoPedidoRepository.saveAll(Arrays.asList(pagto1, pagto2)); 
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
