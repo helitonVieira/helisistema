@@ -1,6 +1,10 @@
 package com.helitonvieira.helisistema.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,9 +12,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
 
 @Entity
 public class Item implements Serializable {
@@ -24,23 +28,29 @@ public class Item implements Serializable {
 	private Double val_preco_venda;
 	private Double val_custo;
 	private String ind_ativo;
-    
+
 	@JsonBackReference
-	/*@ManyToMany // muitos para muitos
-	@JoinTable(name = "Produto_Subgrupo", // criar a tabela intermediaria
-			joinColumns  = @JoinColumn(name = "cod_item"),
-			inverseJoinColumns = @JoinColumn(name = "cod_subcategoria")
-	)
-	 private SubCategoria subCategorias = new ArrayList<>(); */
+	/*
+	 * @ManyToMany // muitos para muitos
+	 * 
+	 * @JoinTable(name = "Produto_Subgrupo", // criar a tabela intermediaria
+	 * joinColumns = @JoinColumn(name = "cod_item"), inverseJoinColumns
+	 * = @JoinColumn(name = "cod_subcategoria") ) private SubCategoria subCategorias
+	 * = new ArrayList<>();
+	 */
 	@ManyToOne
 	@JoinColumn(name = "cod_subcategoria")
-	private SubCategoria cod_subcategoria; 
-	
+	private SubCategoria cod_subcategoria;
+
+	@OneToMany(mappedBy = "id.cod_item")
+	private Set<ItemPedido> cod_item_pedido = new HashSet<>();
+
 	public Item() {
 
 	}
 
-	public Item(Integer cod_item, String des_item, Double val_preco_venda, Double val_custo, String ind_ativo, SubCategoria cod_subcategoria) {
+	public Item(Integer cod_item, String des_item, Double val_preco_venda, Double val_custo, String ind_ativo,
+			SubCategoria cod_subcategoria) {
 		super();
 		this.cod_item = cod_item;
 		this.des_item = des_item;
@@ -48,6 +58,14 @@ public class Item implements Serializable {
 		this.val_custo = val_custo;
 		this.ind_ativo = ind_ativo;
 		this.cod_subcategoria = cod_subcategoria;
+	}
+
+	public List<Pedido> getCod_pedido() {
+		List<Pedido> lista = new ArrayList<>();
+		for (ItemPedido x : cod_item_pedido) {
+			lista.add(x.getCod_pedido());
+		}
+		return lista;
 	}
 
 	public Integer getCod_item() {
@@ -90,13 +108,20 @@ public class Item implements Serializable {
 		this.ind_ativo = ind_ativo;
 	}
 
-	
 	public SubCategoria getCod_subcategoria() {
 		return cod_subcategoria;
 	}
 
 	public void setCod_subcategoria(SubCategoria cod_subcategoria) {
 		this.cod_subcategoria = cod_subcategoria;
+	}
+
+	public Set<ItemPedido> getCod_item_pedido() {
+		return cod_item_pedido;
+	}
+
+	public void setCod_item_pedido(Set<ItemPedido> cod_item_pedido) {
+		this.cod_item_pedido = cod_item_pedido;
 	}
 
 	@Override
@@ -123,4 +148,5 @@ public class Item implements Serializable {
 			return false;
 		return true;
 	}
+
 }

@@ -2,6 +2,8 @@ package com.helitonvieira.helisistema.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -41,6 +44,9 @@ public class Pedido implements Serializable {
 	@JoinColumn(name = "cod_endereco")
 	private Endereco cod_endereco_entrega;
 
+	@OneToMany(mappedBy = "id.cod_pedido")
+	private Set<ItemPedido> cod_item_pedido = new HashSet<>();
+	
 	public Pedido() {
 	} 
 
@@ -102,6 +108,15 @@ public class Pedido implements Serializable {
 		this.cod_endereco_entrega = cod_endereco_entrega;
 	}
 
+	
+	public Set<ItemPedido> getCod_item_pedido() {
+		return cod_item_pedido;
+	}
+
+	public void setCod_item_pedido(Set<ItemPedido> cod_item_pedido) {
+		this.cod_item_pedido = cod_item_pedido;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -126,5 +141,7 @@ public class Pedido implements Serializable {
 			return false;
 		return true;
 	}
+
+	
 
 }

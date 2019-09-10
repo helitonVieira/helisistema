@@ -12,6 +12,7 @@ import com.helitonvieira.helisistema.domain.Cidade;
 import com.helitonvieira.helisistema.domain.Endereco;
 import com.helitonvieira.helisistema.domain.Estado;
 import com.helitonvieira.helisistema.domain.Item;
+import com.helitonvieira.helisistema.domain.ItemPedido;
 import com.helitonvieira.helisistema.domain.PagamentoBoleto;
 import com.helitonvieira.helisistema.domain.PagamentoCartao;
 import com.helitonvieira.helisistema.domain.PagamentoPedido;
@@ -23,6 +24,7 @@ import com.helitonvieira.helisistema.domain.enums.TipoPessoa;
 import com.helitonvieira.helisistema.repositories.CidadeRepository;
 import com.helitonvieira.helisistema.repositories.EnderecoRepository;
 import com.helitonvieira.helisistema.repositories.EstadoRepository;
+import com.helitonvieira.helisistema.repositories.ItemPedidoRepository;
 import com.helitonvieira.helisistema.repositories.ItemRepository;
 import com.helitonvieira.helisistema.repositories.PagamentoPedidoRepository;
 import com.helitonvieira.helisistema.repositories.PedidoRepository;
@@ -48,6 +50,8 @@ public class HelisistemaApplication implements CommandLineRunner {
 	private PedidoRepository pedidoRepository;
 	@Autowired
 	private PagamentoPedidoRepository pagamentoPedidoRepository;
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(HelisistemaApplication.class, args);
@@ -115,6 +119,21 @@ public class HelisistemaApplication implements CommandLineRunner {
 		 
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2)); 
 		pagamentoPedidoRepository.saveAll(Arrays.asList(pagto1, pagto2)); 
+		
+		ItemPedido ip1 = new ItemPedido (ped1,p1, 0.00, 0.00, 5, 15.55 , 7486321);
+		ItemPedido ip2 = new ItemPedido (ped1,p3, 1.80, 0.00, 10, 115.55 , 86555168);
+		ItemPedido ip3 = new ItemPedido (ped2,p2, 0.00, 3.00, 50, 155.55 , 98413168);
+		
+		ped1.getCod_item_pedido().addAll(Arrays.asList(ip1,ip2));
+		ped2.getCod_item_pedido().addAll(Arrays.asList(ip3));
+		
+		p1.getCod_item_pedido().addAll(Arrays.asList(ip1));
+		p1.getCod_item_pedido().addAll(Arrays.asList(ip3));
+		p1.getCod_item_pedido().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
+		
+		
 	}
 
 	
