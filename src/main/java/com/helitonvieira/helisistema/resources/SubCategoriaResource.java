@@ -1,6 +1,8 @@
 package com.helitonvieira.helisistema.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 //import java.util.ArrayList;
 //import java.util.List;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.helitonvieira.helisistema.domain.SubCategoria;
+import com.helitonvieira.helisistema.dto.SubCategoriaDTO;
 import com.helitonvieira.helisistema.services.SubCategoriaService;
 
 @RestController
@@ -48,9 +51,26 @@ public class SubCategoriaResource {
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
-		return ResponseEntity.noContent().build();
-		
+		return ResponseEntity.noContent().build();		
 	}
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<SubCategoriaDTO>> findAll() {
+		List<SubCategoria> list = service.findAll();
+		List<SubCategoriaDTO> listDto = list.stream().map(obj -> new SubCategoriaDTO(obj)).collect(Collectors.toList());  
+		return ResponseEntity.ok().body(listDto);
+	}
+	
+/*	@RequestMapping(value="/page", method=RequestMethod.GET)
+	public ResponseEntity<Page<SubCategoriaDTO>> findPage(
+			@RequestParam(value="page", defaultValue="0") Integer page, 
+			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
+			@RequestParam(value="orderBy", defaultValue="nome") String orderBy, 
+			@RequestParam(value="direction", defaultValue="ASC") String direction) {
+		Page<SubCategoria> list = service.findPage(page, linesPerPage, orderBy, direction);
+		Page<SubCategoriaDTO> listDto = list.map(obj -> new SubCategoriaDTO(obj));  
+		return ResponseEntity.ok().body(listDto);
+	}*/
 	
 	
 }
