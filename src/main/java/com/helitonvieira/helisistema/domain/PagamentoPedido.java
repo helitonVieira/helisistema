@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.helitonvieira.helisistema.domain.enums.EstadoPagamento;
 
 @Entity
@@ -22,6 +23,7 @@ public abstract class PagamentoPedido implements Serializable {
 
 	private Integer cod_estado_pagto;
 
+	@JsonBackReference    //pagamento nao ver pedido
 	@JoinColumn(name = "cod_pedido")
 	@OneToOne
 	@MapsId

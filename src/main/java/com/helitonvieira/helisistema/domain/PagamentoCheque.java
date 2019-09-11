@@ -6,34 +6,35 @@ import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.helitonvieira.helisistema.domain.enums.EstadoPagamento;
 
-@Entity 
-	public class PagamentoCheque extends PagamentoPedido { 
-		private static final long serialVersionUID = 1L;     
-		
-		private String num_agencia;
-		private String num_conta;
-		private String num_fone;
-		
-		@Temporal(TemporalType.DATE)  
-		private Date dta_cheque; 
-	
-	 
-	 @Temporal(TemporalType.DATE)  
-	 private Date dta_predatado; 
-	 
-	 public PagamentoCheque() {  		 
-	 }
+@Entity
+public class PagamentoCheque extends PagamentoPedido {
+	private static final long serialVersionUID = 1L;
 
-	public PagamentoCheque(Integer seq_pagamento, EstadoPagamento ind_estado_pagto, Pedido cod_pedido,String num_agencia,String num_conta,String num_fone,Date dta_cheque,Date dta_predatado) {
+	private String num_agencia;
+	private String num_conta;
+	private String num_fone;
+
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	private Date dta_cheque;
+
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	private Date dta_predatado;
+
+	public PagamentoCheque() {
+	}
+
+	public PagamentoCheque(Integer seq_pagamento, EstadoPagamento ind_estado_pagto, Pedido cod_pedido,
+			String num_agencia, String num_conta, String num_fone, Date dta_cheque, Date dta_predatado) {
 		super(seq_pagamento, ind_estado_pagto, cod_pedido);
 		this.num_agencia = num_agencia;
 		this.num_conta = num_conta;
 		this.num_fone = num_fone;
 		this.dta_cheque = dta_cheque;
 		this.dta_predatado = dta_predatado;
-		
+
 	}
 
 	public String getNum_agencia() {
@@ -74,7 +75,6 @@ import com.helitonvieira.helisistema.domain.enums.EstadoPagamento;
 
 	public void setDta_predatado(Date dta_predatado) {
 		this.dta_predatado = dta_predatado;
-	} 
-	 
+	}
 
 }
