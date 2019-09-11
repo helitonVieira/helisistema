@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.helitonvieira.helisistema.domain.enums.EstadoPagamento;
 
 @Entity
@@ -23,15 +23,15 @@ public abstract class PagamentoPedido implements Serializable {
 
 	private Integer cod_estado_pagto;
 
-	@JsonBackReference    //pagamento nao ver pedido
+	@JsonIgnore
 	@JoinColumn(name = "cod_pedido")
 	@OneToOne
 	@MapsId
 	private Pedido cod_pedido;
-	
-	public PagamentoPedido() {		
+
+	public PagamentoPedido() {
 	}
-	
+
 	public PagamentoPedido(Integer seq_pagamento, EstadoPagamento ind_estado_pagto, Pedido cod_pedido) {
 		super();
 		this.seq_pagamento = seq_pagamento;
@@ -47,12 +47,10 @@ public abstract class PagamentoPedido implements Serializable {
 		this.seq_pagamento = seq_pagamento;
 	}
 
-	
-
 	public EstadoPagamento getCod_estado_pagto() {
 		return EstadoPagamento.toEnum(cod_estado_pagto);
 	}
-	
+
 	public void setCod_estado_pagto(EstadoPagamento ind_estado_pagto) {
 		this.cod_estado_pagto = ind_estado_pagto.getCod_estado_pagto();
 	}
@@ -90,7 +88,4 @@ public abstract class PagamentoPedido implements Serializable {
 		return true;
 	}
 
-	
-	
-	
 }

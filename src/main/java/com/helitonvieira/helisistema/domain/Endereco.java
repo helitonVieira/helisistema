@@ -9,8 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-   @Entity
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
 public class Endereco implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -22,18 +23,18 @@ public class Endereco implements Serializable {
 	private String des_complemento;
 	private String des_bairro;
 	private String num_cep;
-	
-	@JsonBackReference
+
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "cod_pessoa")
 	private Pessoa cod_pessoa;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "cod_cidade")
 	private Cidade cod_cidade;
-	
-	public Endereco(Integer cod_endereco, String des_logradouro,String des_num_logradouro, String des_complemento, String des_bairro,
-			String num_cep, Pessoa cod_pessoa, Cidade cod_cidade) {
+
+	public Endereco(Integer cod_endereco, String des_logradouro, String des_num_logradouro, String des_complemento,
+			String des_bairro, String num_cep, Pessoa cod_pessoa, Cidade cod_cidade) {
 		super();
 		this.cod_endereco = cod_endereco;
 		this.des_logradouro = des_logradouro;
@@ -45,7 +46,7 @@ public class Endereco implements Serializable {
 		this.cod_cidade = cod_cidade;
 	}
 
-	public Endereco() {		
+	public Endereco() {
 	}
 
 	public Integer getCod_endereco() {
@@ -55,7 +56,7 @@ public class Endereco implements Serializable {
 	public void setCod_endereco(Integer cod_endereco) {
 		this.cod_endereco = cod_endereco;
 	}
-	
+
 	public String getDes_logradouro() {
 		return des_logradouro;
 	}
@@ -71,7 +72,7 @@ public class Endereco implements Serializable {
 	public void setDes_num_logradouro(String des_num_logradouro) {
 		this.des_num_logradouro = des_num_logradouro;
 	}
-	
+
 	public String getDes_complemento() {
 		return des_complemento;
 	}
@@ -103,7 +104,7 @@ public class Endereco implements Serializable {
 	public void setCod_pessoa(Pessoa cod_pessoa) {
 		this.cod_pessoa = cod_pessoa;
 	}
-	
+
 	public Cidade getCod_cidade() {
 		return cod_cidade;
 	}
@@ -136,6 +137,5 @@ public class Endereco implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
+
 }

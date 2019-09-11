@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -30,7 +29,7 @@ public class Item implements Serializable {
 	private Double val_custo;
 	private String ind_ativo;
 
-	@JsonBackReference
+	@JsonIgnore
 	/*
 	 * @ManyToMany // muitos para muitos
 	 * 
@@ -61,7 +60,7 @@ public class Item implements Serializable {
 		this.ind_ativo = ind_ativo;
 		this.cod_subcategoria = cod_subcategoria;
 	}
-   
+
 	@JsonIgnore
 	public List<Pedido> getCod_pedido() {
 		List<Pedido> lista = new ArrayList<>();

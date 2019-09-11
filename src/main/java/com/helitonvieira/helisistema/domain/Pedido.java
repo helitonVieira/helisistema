@@ -14,11 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Pedido implements Serializable {
@@ -32,16 +29,13 @@ public class Pedido implements Serializable {
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date dta_pedido;
 
-	@JsonManagedReference   
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "cod_pedido")
 	private PagamentoPedido pagamento;
 
-	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "cod_pessoa_cliente")
 	private Pessoa cod_pessoa_cliente;
 
-	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "cod_pessoa_vendedor")
 	private Pessoa cod_pessoa_vendedor;
@@ -52,9 +46,9 @@ public class Pedido implements Serializable {
 
 	@OneToMany(mappedBy = "id.cod_pedido")
 	private Set<ItemPedido> cod_item_pedido = new HashSet<>();
-	
+
 	public Pedido() {
-	} 
+	}
 
 	public Pedido(Integer cod_pedido, Date dta_pedido, Pessoa cod_pessoa_cliente, Pessoa cod_pessoa_vendedor,
 			Endereco cod_endereco_entrega) {
@@ -114,7 +108,6 @@ public class Pedido implements Serializable {
 		this.cod_endereco_entrega = cod_endereco_entrega;
 	}
 
-	
 	public Set<ItemPedido> getCod_item_pedido() {
 		return cod_item_pedido;
 	}
@@ -122,7 +115,7 @@ public class Pedido implements Serializable {
 	public void setCod_item_pedido(Set<ItemPedido> cod_item_pedido) {
 		this.cod_item_pedido = cod_item_pedido;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -147,7 +140,5 @@ public class Pedido implements Serializable {
 			return false;
 		return true;
 	}
-
-	
 
 }

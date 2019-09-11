@@ -14,8 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.helitonvieira.helisistema.domain.enums.TipoPessoa;
 
 @Entity
@@ -43,7 +42,6 @@ public class Pessoa implements Serializable {
 	private String ind_ativo;
 	private Integer cod_tipo_pessoa;// foi criado da class tipo depois alterado para integer
 
-	@JsonManagedReference
 	@OneToMany(mappedBy = "cod_pessoa")
 	private List<Endereco> enderecos = new ArrayList<>();
 
@@ -54,12 +52,12 @@ public class Pessoa implements Serializable {
 	@ElementCollection
 	@CollectionTable(name = "Email")
 	private Set<String> des_email = new HashSet<>();
-	
-	@JsonBackReference
+
+	@JsonIgnore
 	@OneToMany(mappedBy = "cod_pessoa_cliente")
 	private List<Pedido> cod_pessoa_cliente = new ArrayList<>();
-	
-	@JsonBackReference
+
+	@JsonIgnore
 	@OneToMany(mappedBy = "cod_pessoa_vendedor")
 	private List<Pedido> cod_pessoa_vendedor = new ArrayList<>();
 
@@ -224,8 +222,6 @@ public class Pessoa implements Serializable {
 		this.des_email = des_email;
 	}
 
-	
-	
 	public List<Pedido> getCod_pessoa_cliente() {
 		return cod_pessoa_cliente;
 	}
@@ -234,7 +230,6 @@ public class Pessoa implements Serializable {
 		this.cod_pessoa_cliente = cod_pessoa_cliente;
 	}
 
-	
 	public List<Pedido> getCod_pessoa_vendedor() {
 		return cod_pessoa_vendedor;
 	}

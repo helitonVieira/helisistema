@@ -9,8 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 public class SubCategoria implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -21,7 +19,7 @@ public class SubCategoria implements Serializable{
 private Integer cod_subcategoria;
 private String des_subcategoria;
 
-@JsonManagedReference
+
 @OneToMany(mappedBy="cod_subcategoria")
 private List<Item> itens  = new ArrayList<>();
 

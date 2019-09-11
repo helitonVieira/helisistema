@@ -9,35 +9,30 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 public class Cidade implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
+
 	private Integer cod_cidade;
 	private String nom_cidade;
-	
-	@JsonManagedReference
+
 	@ManyToOne
-	@JoinColumn(name="cod_estado")
+	@JoinColumn(name = "cod_estado")
 	private Estado cod_estado;
-	
+
 	public Cidade() {
-		
+
 	}
 
-	
 	public Cidade(Integer cod_cidade, String nom_cidade, Estado cod_estado) {
 		super();
 		this.cod_cidade = cod_cidade;
 		this.nom_cidade = nom_cidade;
 		this.cod_estado = cod_estado;
 	}
-
 
 	public Integer getCod_cidade() {
 		return cod_cidade;
@@ -88,5 +83,4 @@ public class Cidade implements Serializable {
 		return true;
 	}
 
-	
 }
