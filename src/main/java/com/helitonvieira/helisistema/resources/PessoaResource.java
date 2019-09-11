@@ -21,8 +21,8 @@ public class PessoaResource {
 	private PessoaService service;
 
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
-		Pessoa obj = service.buscar(id);
+	public ResponseEntity<Pessoa> find(@PathVariable Integer id) {
+		Pessoa obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 }

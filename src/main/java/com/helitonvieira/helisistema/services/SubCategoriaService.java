@@ -15,14 +15,20 @@ public class SubCategoriaService {
 	@Autowired
 	private SubCategoriaRepository repo;
 
-	public SubCategoria buscar(Integer id) {
+	public SubCategoria find(Integer id) {
 		Optional<SubCategoria> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado Codigo: " + id + ", Tipo: = " + SubCategoria.class.getName()));
 	}
-	
-	public SubCategoria insert(SubCategoria obj){
+
+	public SubCategoria insert(SubCategoria obj) {
 		obj.setCod_subcategoria(null);
 		return repo.save(obj);
 	}
+
+	public SubCategoria update(SubCategoria obj) {
+		find(obj.getCod_subcategoria());
+		return repo.save(obj);
+	}
+
 }

@@ -25,8 +25,8 @@ public class SubCategoriaResource {
 	private SubCategoriaService service;
 
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
-		SubCategoria obj = service.buscar(id);
+	public ResponseEntity<SubCategoria> find(@PathVariable Integer id) {
+		SubCategoria obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
@@ -37,4 +37,13 @@ public class SubCategoriaResource {
 				.path("/{id}").buildAndExpand(obj.getCod_subcategoria()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody SubCategoria obj,@PathVariable Integer id){
+		obj.setCod_subcategoria(id);
+		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
+	}
+	
+	
 }
