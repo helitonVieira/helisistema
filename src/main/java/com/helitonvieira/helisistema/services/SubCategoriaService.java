@@ -50,12 +50,12 @@ public class SubCategoriaService {
 		return repo.findAll();
 	}
 	
-	/*public Page<SubCategoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
-		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+	public Page<SubCategoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest	 pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
 	}
 	
-	public SubCategoria fromDTO(SubCategoriaDTO objDto) {
+	/*public SubCategoria fromDTO(SubCategoriaDTO objDto) {
 		return new SubCategoria(objDto.getId(), objDto.getNome());
 	}
 	

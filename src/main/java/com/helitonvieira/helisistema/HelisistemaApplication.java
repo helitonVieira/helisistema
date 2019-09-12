@@ -62,17 +62,34 @@ public class HelisistemaApplication implements CommandLineRunner {
 
 		SubCategoria cat1 = new SubCategoria(null, "Refrigerante");
 		SubCategoria cat2 = new SubCategoria(null, "Cerveja");
+		SubCategoria cat3 = new SubCategoria(null, "Biscoito");
+		SubCategoria cat4 = new SubCategoria(null, "Padaria");
+		SubCategoria cat5 = new SubCategoria(null, "Verdura");
+		SubCategoria cat6 = new SubCategoria(null, "Chocolate");
+		SubCategoria cat7 = new SubCategoria(null, "Acougue");
+		
+
 
 		Item p1 = new Item(null, "Skol", 4.5, 2.2, "S",cat2);
 		Item p2 = new Item(null, "Coca lata", 14.5, 6.2, "S",cat1);
 		Item p3 = new Item(null, "Fanta Laranja", 24.5, 22.2, "S",cat1);
+		Item p4 = new Item(null, "Skol 3", 4.5, 2.2, "S",cat3);
+		Item p5 = new Item(null, "Coca lata 4", 14.5, 6.2, "S",cat4);
+		Item p6 = new Item(null, "Fanta Laranja 5", 24.5, 22.2, "S",cat5);
+		Item p7 = new Item(null, "Coca lata 6", 14.5, 6.2, "S",cat6);
+		Item p8 = new Item(null, "Fanta Laranja 7", 24.5, 22.2, "S",cat7);
 
 		cat1.getItens().addAll(Arrays.asList(p3, p2));
 		cat2.getItens().addAll(Arrays.asList(p1));
+		cat3.getItens().addAll(Arrays.asList(p4));
+		cat4.getItens().addAll(Arrays.asList(p5));
+		cat5.getItens().addAll(Arrays.asList(p6));
+		cat6.getItens().addAll(Arrays.asList(p7));
+		cat7.getItens().addAll(Arrays.asList(p8));
 
 
-		subCategoriaRepository.saveAll(Arrays.asList(cat1, cat2));
-		itemRepository.saveAll(Arrays.asList(p1, p2, p3));
+		subCategoriaRepository.saveAll(Arrays.asList(cat1, cat2,cat3, cat4,cat5, cat6,cat7));
+		itemRepository.saveAll(Arrays.asList(p1, p2, p3,p4, p5, p6,p7, p8));
 
 		Estado est1 = new Estado(null, "Minas Gerais", "MG", "Brasil");
 		Estado est2 = new Estado(null, "São Paulo", "SP", "Brasil");

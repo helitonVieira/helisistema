@@ -29,15 +29,7 @@ public class Item implements Serializable {
 	private Double val_custo;
 	private String ind_ativo;
 
-	@JsonIgnore
-	/*
-	 * @ManyToMany // muitos para muitos
-	 * 
-	 * @JoinTable(name = "Produto_Subgrupo", // criar a tabela intermediaria
-	 * joinColumns = @JoinColumn(name = "cod_item"), inverseJoinColumns
-	 * = @JoinColumn(name = "cod_subcategoria") ) private SubCategoria subCategorias
-	 * = new ArrayList<>();
-	 */
+	@JsonIgnore	
 	@ManyToOne
 	@JoinColumn(name = "cod_subcategoria")
 	private SubCategoria cod_subcategoria;

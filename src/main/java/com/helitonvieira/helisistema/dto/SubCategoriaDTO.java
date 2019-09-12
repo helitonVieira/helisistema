@@ -2,6 +2,9 @@ package com.helitonvieira.helisistema.dto;
 
 import java.io.Serializable;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.helitonvieira.helisistema.domain.SubCategoria;
 
 public class SubCategoriaDTO implements Serializable{
@@ -9,6 +12,9 @@ public class SubCategoriaDTO implements Serializable{
 	
 
 private Integer cod_subcategoria;
+
+@NotEmpty(message="Preenchimento obrigatório")
+@Length(min=5, max=80, message="O tamanho deve ser entre 5 e 80 caracteres")
 private String des_subcategoria;
 
 public SubCategoriaDTO() {	
@@ -16,6 +22,7 @@ public SubCategoriaDTO() {
 
 public SubCategoriaDTO(SubCategoria obj) {
 	cod_subcategoria = obj.getCod_subcategoria();
+	
 	des_subcategoria = obj.getDes_subcategoria();
 	
 }
