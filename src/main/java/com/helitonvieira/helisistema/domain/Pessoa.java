@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -42,7 +43,7 @@ public class Pessoa implements Serializable {
 	private String ind_ativo;
 	private Integer cod_tipo_pessoa;// foi criado da class tipo depois alterado para integer
 
-	@OneToMany(mappedBy = "cod_pessoa")
+	@OneToMany(mappedBy = "cod_pessoa", cascade=CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
 
 	@ElementCollection
