@@ -35,6 +35,10 @@ public class ItemPedido implements Serializable {
 		this.val_total_item = val_total_item;
 		this.cod_barra = cod_barra;
 	}
+	
+	public double getSubTotal() {
+		return (val_total_item - val_desconto + val_acrescimo) * qtd_item;
+	}
 
 	@JsonIgnore
 	public Pedido getCod_pedido() {

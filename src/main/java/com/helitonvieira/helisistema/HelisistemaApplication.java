@@ -78,7 +78,11 @@ public class HelisistemaApplication implements CommandLineRunner {
 		Item p6 = new Item(null, "Fanta Laranja 5", 24.5, 22.2, "S",cat5);
 		Item p7 = new Item(null, "Coca lata 6", 14.5, 6.2, "S",cat6);
 		Item p8 = new Item(null, "Fanta Laranja 7", 24.5, 22.2, "S",cat7);
-
+		Item p9 = new Item(null, "Skol", 4.5, 2.2, "S",cat2);
+		Item p10 = new Item(null, "Coca lata", 14.5, 6.2, "S",cat1);
+		Item p11 = new Item(null, "Fanta Laranja", 24.5, 22.2, "S",cat1);
+		
+		
 		cat1.getItens().addAll(Arrays.asList(p3, p2));
 		cat2.getItens().addAll(Arrays.asList(p1));
 		cat3.getItens().addAll(Arrays.asList(p4));
@@ -89,7 +93,7 @@ public class HelisistemaApplication implements CommandLineRunner {
 
 
 		subCategoriaRepository.saveAll(Arrays.asList(cat1, cat2,cat3, cat4,cat5, cat6,cat7));
-		itemRepository.saveAll(Arrays.asList(p1, p2, p3,p4, p5, p6,p7, p8));
+		itemRepository.saveAll(Arrays.asList(p1, p2, p3,p4, p5, p6,p7, p8,p9,p10,p11));
 
 		Estado est1 = new Estado(null, "Minas Gerais", "MG", "Brasil");
 		Estado est2 = new Estado(null, "São Paulo", "SP", "Brasil");

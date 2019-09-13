@@ -2,9 +2,19 @@ package com.helitonvieira.helisistema.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.helitonvieira.helisistema.services.validation.PessoaInsert;
+
+@PessoaInsert
 public class PessoaNewDTO  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@NotEmpty(message="Preenchimento obrigatório")
+	@Length(min=5, max=120, message="O tamanho deve ser entre 5 e 120 caracteres")
 	private String nom_pessoa;
 	private String nom_fantasia;
 	private String num_cnpj_cpf;
@@ -29,12 +39,18 @@ public class PessoaNewDTO  implements Serializable {
 	private String des_bairro;
 	private String num_cep;
 
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String num_fone1;
 	private String num_fone2;
 	private String num_fone3;
 	
+	@Email(message="Email inválido")
 	private String des_email1;
+	
+	@Email(message="Email inválido")
 	private String des_email2;
+	
+	@Email(message="Email inválido")
 	private String des_email3;
 	
 	private Integer cod_cidade;
@@ -43,40 +59,7 @@ public class PessoaNewDTO  implements Serializable {
 		
 	}
 
-	public PessoaNewDTO(String nom_pessoa, String nom_fantasia, String num_cnpj_cpf, String num_ie_rg,
-			String dta_nascimento, String nom_responsavel, String des_observacao, String dta_cadastro,
-			String ind_cliente, String ind_fornecedor, String ind_funcionario, String ind_ativo,
-			Integer cod_tipo_pessoa, String des_logradouro, String des_num_logradouro, String des_complemento,
-			String des_bairro, String num_cep, String num_fone1, String num_fone2, String num_fone3, String des_email1,
-			String des_email2, String des_email3, Integer cod_cidade) {
-		super();
-		this.nom_pessoa = nom_pessoa;
-		this.nom_fantasia = nom_fantasia;
-		this.num_cnpj_cpf = num_cnpj_cpf;
-		this.num_ie_rg = num_ie_rg;
-		this.dta_nascimento = dta_nascimento;
-		this.nom_responsavel = nom_responsavel;
-		this.des_observacao = des_observacao;
-		this.dta_cadastro = dta_cadastro;
-		this.ind_cliente = ind_cliente;
-		this.ind_fornecedor = ind_fornecedor;
-		this.ind_funcionario = ind_funcionario;
-		this.ind_ativo = ind_ativo;
-		this.cod_tipo_pessoa = cod_tipo_pessoa;
-		this.des_logradouro = des_logradouro;
-		this.des_num_logradouro = des_num_logradouro;
-		this.des_complemento = des_complemento;
-		this.des_bairro = des_bairro;
-		this.num_cep = num_cep;
-		this.num_fone1 = num_fone1;
-		this.num_fone2 = num_fone2;
-		this.num_fone3 = num_fone3;
-		this.des_email1 = des_email1;
-		this.des_email2 = des_email2;
-		this.des_email3 = des_email3;
-		this.cod_cidade = cod_cidade;
-	}
-
+	
 	public String getNom_pessoa() {
 		return nom_pessoa;
 	}

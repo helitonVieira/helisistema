@@ -10,13 +10,13 @@ import com.helitonvieira.helisistema.domain.Pessoa;
 
 public class PessoaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer cod_pessoa;
-	
+
 	@NotEmpty(message = "Preenchimento obrigatório")
-	@Length(min = 5, max =120, message = "O tamanho tem que ser entre 5 e 120 caracteres")
+	@Length(min = 5, max = 120, message = "O tamanho tem que ser entre 5 e 120 caracteres")
 	private String nom_pessoa;
-	
+
 	private String nom_fantasia;
 	private String num_cnpj_cpf;
 	private String num_ie_rg;
@@ -30,46 +30,28 @@ public class PessoaDTO implements Serializable {
 	private String ind_fornecedor;
 	private String ind_funcionario;
 	private String ind_ativo;
-	
-    public PessoaDTO() {
-    	
-    }
-    
-    public PessoaDTO(Pessoa obj) {
-    	
-    	cod_pessoa = obj.getCod_pessoa();
-    	nom_pessoa = obj.getNom_pessoa();
-    	nom_fantasia = obj.getNom_fantasia();
-    	num_cnpj_cpf = obj.getNum_cnpj_cpf();
-    	num_ie_rg = obj.getNum_ie_rg();
-    	dta_nascimento = obj.getDta_nascimento();
-    	nom_responsavel = obj.getNom_responsavel();
+
+	public PessoaDTO() {
+
+	}
+
+	public PessoaDTO(Pessoa obj) {
+
+		cod_pessoa = obj.getCod_pessoa();
+		nom_pessoa = obj.getNom_pessoa();
+		nom_fantasia = obj.getNom_fantasia();
+		num_cnpj_cpf = obj.getNum_cnpj_cpf();
+		num_ie_rg = obj.getNum_ie_rg();
+		dta_nascimento = obj.getDta_nascimento();
+		nom_responsavel = obj.getNom_responsavel();
 		des_observacao = obj.getDes_observacao();
 		dta_cadastro = obj.getDta_cadastro();
 		ind_cliente = obj.getInd_cliente();
 		ind_fornecedor = obj.getInd_fornecedor();
 		ind_funcionario = obj.getInd_funcionario();
 		ind_ativo = obj.getInd_ativo();
-    }
-
-	public PessoaDTO(Integer cod_pessoa, String nom_pessoa, String nom_fantasia, String num_cnpj_cpf, String num_ie_rg,
-			String dta_nascimento, String nom_responsavel, String des_observacao, String dta_cadastro,
-			String ind_cliente, String ind_fornecedor, String ind_funcionario, String ind_ativo) {
-		super();
-		this.cod_pessoa = cod_pessoa;
-		this.nom_pessoa = nom_pessoa;
-		this.nom_fantasia = nom_fantasia;
-		this.num_cnpj_cpf = num_cnpj_cpf;
-		this.num_ie_rg = num_ie_rg;
-		this.dta_nascimento = dta_nascimento;
-		this.nom_responsavel = nom_responsavel;
-		this.des_observacao = des_observacao;
-		this.dta_cadastro = dta_cadastro;
-		this.ind_cliente = ind_cliente;
-		this.ind_fornecedor = ind_fornecedor;
-		this.ind_funcionario = ind_funcionario;
-		this.ind_ativo = ind_ativo;
 	}
+
 
 	public Integer getCod_pessoa() {
 		return cod_pessoa;
@@ -173,8 +155,6 @@ public class PessoaDTO implements Serializable {
 
 	public void setInd_ativo(String ind_ativo) {
 		this.ind_ativo = ind_ativo;
-	}  
-    
-    
+	}
 
 }
