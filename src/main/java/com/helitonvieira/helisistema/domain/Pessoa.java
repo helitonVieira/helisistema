@@ -83,7 +83,7 @@ public class Pessoa implements Serializable {
 		this.ind_fornecedor = ind_fornecedor;
 		this.ind_funcionario = ind_funcionario;
 		this.ind_ativo = ind_ativo;
-		this.cod_tipo_pessoa = cod_tipo_pessoa.getCod_tipo_pessoa();
+		this.cod_tipo_pessoa = (cod_tipo_pessoa == null) ? null : cod_tipo_pessoa.getCod_tipo_pessoa();
 	}
 
 	public Integer getCod_pessoa() {

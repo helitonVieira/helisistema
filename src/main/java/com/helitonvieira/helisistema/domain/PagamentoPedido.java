@@ -35,7 +35,7 @@ public abstract class PagamentoPedido implements Serializable {
 	public PagamentoPedido(Integer seq_pagamento, EstadoPagamento ind_estado_pagto, Pedido cod_pedido) {
 		super();
 		this.seq_pagamento = seq_pagamento;
-		this.cod_estado_pagto = ind_estado_pagto.getCod_estado_pagto();
+		this.cod_estado_pagto = (cod_estado_pagto==null) ? null :ind_estado_pagto.getCod_estado_pagto();
 		this.cod_pedido = cod_pedido;
 	}
 
