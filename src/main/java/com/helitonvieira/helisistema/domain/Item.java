@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -22,8 +23,8 @@ public class Item implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
 	private Integer cod_item;
+	
 	private String des_item;
 	private Double val_preco_venda;
 	private Double val_custo;
@@ -31,11 +32,14 @@ public class Item implements Serializable {
 
 	@JsonIgnore	
 	@ManyToOne
-	@JoinColumn(name = "cod_subcategoria")
-	private SubCategoria cod_subcategoria;
+	//@JoinTable(name = "PRODUTO_CATEGORIA",
+		@JoinColumn(name = "cod_subcategoria")//,
+	//	inverseJoinColumns = @JoinColumn(name = "categoria_id")
+		//	)
+		private SubCategoria cod_subcategoria;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "id.cod_item")
+	@OneToMany(mappedBy = "id.cod_item")	
 	private Set<ItemPedido> cod_item_pedido = new HashSet<>();
 
 	public Item() {

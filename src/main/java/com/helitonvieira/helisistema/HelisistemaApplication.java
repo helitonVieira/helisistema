@@ -108,14 +108,14 @@ public class HelisistemaApplication implements CommandLineRunner {
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-		Pessoa cli1 = new Pessoa(null,"Heliton Vieira","Gugu","064.146.847-22","MG11586.757","02/05/1983","Nilda","teste obs","01/01/2019","S","S","S","S",TipoPessoa.PESSOAFISICA);
+		Pessoa cli1 = new Pessoa(null,"Heliton Vieira","Gugu","064.146.847-22","MG11586.757","02/05/1983","Nilda","teste obs","01/01/2019","S","S","S","S",TipoPessoa.PESSOAFISICA,"senha");
 		cli1.getNum_fone().addAll(Arrays.asList("996451318","88142535"));
 		cli1.getDes_email().addAll(Arrays.asList("helitondba@gmail.com","heli.ton@hotmail.com"));
 		Endereco e1 = new Endereco(null,"Bento Gonçalves","851","casa1","Nossa Shra das Graças","38401-002",cli1,c1);
 		Endereco e2 = new Endereco(null,"Dr Munir Tanus","201","ap304","Gavea Sul","38401-002",cli1,c1);
 		cli1.getEnderecos().addAll(Arrays.asList(e1,e2));
 		
-		Pessoa cli2 = new Pessoa(null,"Juliana","juju","064.146.847-22","MG11586.757","02/05/1983","Nilda","teste obs","01/01/2019","S","S","S","N",TipoPessoa.PESSOAJURIDICA);
+		Pessoa cli2 = new Pessoa(null,"Juliana","juju","064.146.847-22","MG11586.757","02/05/1983","Nilda","teste obs","01/01/2019","S","S","S","N",TipoPessoa.PESSOAJURIDICA,"senha");
 		cli2.getNum_fone().addAll(Arrays.asList("91008341","88142535"));
 		cli2.getDes_email().addAll(Arrays.asList("juju@gmail.com","jujuxpd@hotmail.com"));
 		Endereco e3 = new Endereco(null,"Artesanato","851","casa1","Planalto","38401-002",cli2,c2);

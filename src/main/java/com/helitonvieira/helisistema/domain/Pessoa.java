@@ -5,17 +5,21 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.helitonvieira.helisistema.domain.enums.Perfil;
 import com.helitonvieira.helisistema.domain.enums.TipoPessoa;
 
 @Entity
@@ -26,6 +30,10 @@ public class Pessoa implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer cod_pessoa;
 	private String nom_pessoa;
+	
+	@Column(unique=true)
+	private String des_email;
+	
 	private String nom_fantasia;
 	private String num_cnpj_cpf;
 	private String num_ie_rg;
@@ -43,6 +51,9 @@ public class Pessoa implements Serializable {
 	private String ind_ativo;
 	private Integer cod_tipo_pessoa;// foi criado da class tipo depois alterado para integer
 
+	@JsonIgnore
+	private String senha;
+	
 	@OneToMany(mappedBy = "cod_pessoa", cascade=CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
 
@@ -50,9 +61,10 @@ public class Pessoa implements Serializable {
 	@CollectionTable(name = "Telefone")
 	private Set<String> num_fone = new HashSet<>();// set é um conjunto de string que nao aceita repeticao
 
-	@ElementCollection
-	@CollectionTable(name = "Email")
-	private Set<String> des_email = new HashSet<>();
+	@ElementCollection(fetch=FetchType.EAGER)
+	@CollectionTable(name="PERFIS")
+	private Set<Integer> perfis = new HashSet<>();	
+	
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "cod_pessoa_cliente")
@@ -63,13 +75,13 @@ public class Pessoa implements Serializable {
 	private List<Pedido> cod_pessoa_vendedor = new ArrayList<>();
 
 	public Pessoa() {
-
+		addPerfil(Perfil.CLIENTE);
 	}
 
 	public Pessoa(Integer cod_pessoa, String nom_pessoa, String nom_fantasia, String num_cnpj_cpf, String num_ie_rg,
 			String dta_nascimento, String nom_responsavel, String des_observacao, String dta_cadastro,
 			String ind_cliente, String ind_fornecedor, String ind_funcionario, String ind_ativo,
-			TipoPessoa cod_tipo_pessoa) {
+			TipoPessoa cod_tipo_pessoa, String senha) {
 		super();
 		this.cod_pessoa = cod_pessoa;
 		this.nom_pessoa = nom_pessoa;
@@ -85,6 +97,8 @@ public class Pessoa implements Serializable {
 		this.ind_funcionario = ind_funcionario;
 		this.ind_ativo = ind_ativo;
 		this.cod_tipo_pessoa = (cod_tipo_pessoa == null) ? null : cod_tipo_pessoa.getCod_tipo_pessoa();
+		this.senha = senha;
+		addPerfil(Perfil.CLIENTE);
 	}
 
 	public Integer getCod_pessoa() {
@@ -199,6 +213,22 @@ public class Pessoa implements Serializable {
 		this.cod_tipo_pessoa = cod_tipo_pessoa.getCod_tipo_pessoa();
 	}
 
+	public String getSenha() {
+		return senha;
+	}
+	
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
+	public Set<Perfil> getPerfis() {
+		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+	}
+	
+	public void addPerfil(Perfil perfil) {
+		perfis.add(perfil.getCod());
+	}
+	
 	public List<Endereco> getEnderecos() {
 		return enderecos;
 	}
@@ -215,11 +245,13 @@ public class Pessoa implements Serializable {
 		this.num_fone = num_fone;
 	}
 
-	public Set<String> getDes_email() {
+	
+
+	public String getDes_email() {
 		return des_email;
 	}
 
-	public void setDes_email(Set<String> des_email) {
+	public void setDes_email(String des_email) {
 		this.des_email = des_email;
 	}
 

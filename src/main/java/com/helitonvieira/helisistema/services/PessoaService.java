@@ -4,21 +4,26 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.helitonvieira.helisistema.domain.Cidade;
 import com.helitonvieira.helisistema.domain.Endereco;
 import com.helitonvieira.helisistema.domain.Pessoa;
+import com.helitonvieira.helisistema.domain.enums.Perfil;
 import com.helitonvieira.helisistema.domain.enums.TipoPessoa;
 import com.helitonvieira.helisistema.dto.PessoaDTO;
 import com.helitonvieira.helisistema.dto.PessoaNewDTO;
 import com.helitonvieira.helisistema.repositories.EnderecoRepository;
 import com.helitonvieira.helisistema.repositories.PessoaRepository;
+import com.helitonvieira.helisistema.security.UserSS;
+import com.helitonvieira.helisistema.services.exceptions.AuthorizationException;
 import com.helitonvieira.helisistema.services.exceptions.DataIntegrityException;
 import com.helitonvieira.helisistema.services.exceptions.ObjectNotFoundException;
 
@@ -28,39 +33,46 @@ public class PessoaService {
 	@Autowired
 	private PessoaRepository repo;
 
-	// @Autowired
-	// private BCryptPasswordEncoder pe;
+	 @Autowired
+	 private BCryptPasswordEncoder pe;
 
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 
-	/*
-	 * @Autowired private S3Service s3Service;
-	 * 
-	 * @Autowired private ImageService imageService;
-	 * 
-	 * @Value("${img.prefix.client.profile}") private String prefix;
-	 * 
-	 * @Value("${img.profile.size}") private Integer size;
-	 */
-
+	
+	 @Autowired 
+	 private S3Service s3Service;
+	 
+	 @Autowired 
+	 private ImageService imageService;
+	  
+	 @Value("${img.prefix.client.profile}") 
+	 private String prefix;
+	  
+	 @Value("${img.profile.size}") 
+	 private Integer size;
+	 
+	 public Pessoa find(Integer id) {
+			
+			UserSS user = UserService.authenticated();
+			if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+				throw new AuthorizationException("Acesso negado");
+			}
+			
+			Optional<Pessoa> obj = repo.findById(id);
+			return obj.orElseThrow(() -> new ObjectNotFoundException(
+					"Objeto não encontrado! Id: " + id + ", Tipo: " + Pessoa.class.getName()));
+		}
+  
+	 
 	public Pessoa find(Integer id) {
 		Optional<Pessoa> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado Codigo: " + id + ", Tipo: = " + Pessoa.class.getName()));
 	}
 
-	/*
-	 * public Cliente find(Integer id) {
-	 * 
-	 * UserSS user = UserService.authenticated(); if (user == null ||
-	 * !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) { throw new
-	 * AuthorizationException("Acesso negado"); }
-	 * 
-	 * Pessoa obj = repo.findOne(id); if (obj == null) { throw new
-	 * ObjectNotFoundException( "Objeto não encontrado! Id: " + id + ", Tipo: " +
-	 * Pessoa.class.getName()); } return obj; }
-	 */
+	
+	
 	@Transactional
 	public Pessoa insert(Pessoa obj) {
 		obj.setCod_pessoa(null);
@@ -145,8 +157,8 @@ public class PessoaService {
 		newObj.setInd_ativo(obj.getInd_ativo());
 	}
 
-	/*
-	 * public Pessoa findByEmail(String email) {
+	
+	/* * public Pessoa findByEmail(String email) {
 	 * 
 	 * UserSS user = UserService.authenticated(); if (user == null ||
 	 * !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) { throw new
@@ -171,6 +183,6 @@ public class PessoaService {
 	 * String fileName = prefix + user.getId() + ".jpg";
 	 * 
 	 * return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"),
-	 * fileName, "image");
-	 */
+	 * fileName, "image");*/
+	 
 }

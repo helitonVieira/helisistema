@@ -80,7 +80,7 @@ public class PessoaResource {
 	}
 	
 	
-	/*	@RequestMapping(value="/email", method=RequestMethod.GET)
+		@RequestMapping(value="/email", method=RequestMethod.GET)
 	public ResponseEntity<Pessoa> find(@RequestParam(value="value") String email) {
 		Pessoa obj = service.findByEmail(email);
 		return ResponseEntity.ok().body(obj);
@@ -114,5 +114,5 @@ public class PessoaResource {
 		Page<Pessoa> list = service.findPage(page, linesPerPage, orderBy, direction);
 		Page<PessoaDTO> listDto = list.map(obj -> new PessoaDTO(obj));  
 		return ResponseEntity.ok().body(listDto);
-}*/
+}
 }

@@ -2,9 +2,11 @@ package com.helitonvieira.helisistema.domain;
 
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.helitonvieira.helisistema.domain.enums.EstadoPagamento;
 
 @Entity
+@JsonTypeName("pagamentoCartao")
 public class PagamentoCartao extends PagamentoPedido {
 	private static final long serialVersionUID = 1L;
 
