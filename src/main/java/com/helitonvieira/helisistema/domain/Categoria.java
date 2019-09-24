@@ -1,5 +1,4 @@
 package com.helitonvieira.helisistema.domain;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,27 +7,24 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.ManyToMany;
 
 @Entity
-public class Estado implements Serializable {
+public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy="estado")
-	private List<Cidade> cidades = new ArrayList<>();
+	@ManyToMany(mappedBy="categorias")
+	private List<Produto> produtos = new ArrayList<>();
 	
-	public Estado() {
+	public Categoria() {
 	}
 
-	public Estado(Integer id, String nome) {
+	public Categoria(Integer id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -50,12 +46,12 @@ public class Estado implements Serializable {
 		this.nome = nome;
 	}
 
-	public List<Cidade> getCidades() {
-		return cidades;
+	public List<Produto> getProdutos() {
+		return produtos;
 	}
 
-	public void setCidades(List<Cidade> cidades) {
-		this.cidades = cidades;
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
 	}
 
 	@Override
@@ -74,7 +70,7 @@ public class Estado implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Estado other = (Estado) obj;
+		Categoria other = (Categoria) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -82,5 +78,4 @@ public class Estado implements Serializable {
 			return false;
 		return true;
 	}
-
 }

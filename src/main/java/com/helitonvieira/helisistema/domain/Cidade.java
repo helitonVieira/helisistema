@@ -8,61 +8,59 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
+ 
 @Entity
 public class Cidade implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
-	private Integer cod_cidade;
-	private String nom_cidade;
-
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer id;
+	private String nome;
+	
 	@ManyToOne
-	@JoinColumn(name = "cod_estado")
-	private Estado cod_estado;
-
+	@JoinColumn(name="estado_id")
+	private Estado estado;
+	
 	public Cidade() {
-
 	}
 
-	public Cidade(Integer cod_cidade, String nom_cidade, Estado cod_estado) {
+	public Cidade(Integer id, String nome, Estado estado) {
 		super();
-		this.cod_cidade = cod_cidade;
-		this.nom_cidade = nom_cidade;
-		this.cod_estado = cod_estado;
+		this.id = id;
+		this.nome = nome;
+		this.estado = estado;
 	}
 
-	public Integer getCod_cidade() {
-		return cod_cidade;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setCod_cidade(Integer cod_cidade) {
-		this.cod_cidade = cod_cidade;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public String getNom_cidade() {
-		return nom_cidade;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setNom_cidade(String nom_cidade) {
-		this.nom_cidade = nom_cidade;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
-	public Estado getCod_estado() {
-		return cod_estado;
+	public Estado getEstado() {
+		return estado;
 	}
 
-	public void setCod_estado(Estado cod_estado) {
-		this.cod_estado = cod_estado;
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((cod_cidade == null) ? 0 : cod_cidade.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -75,12 +73,11 @@ public class Cidade implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Cidade other = (Cidade) obj;
-		if (cod_cidade == null) {
-			if (other.cod_cidade != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!cod_cidade.equals(other.cod_cidade))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
-
 }

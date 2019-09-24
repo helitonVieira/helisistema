@@ -10,7 +10,7 @@ import com.helitonvieira.helisistema.domain.enums.EstadoPagamento;
 
 @Entity
 @JsonTypeName("pagamentoComBoleto")
-public class PagamentoBoleto extends Pagamento {
+public class PagamentoComBoleto extends Pagamento {
 	private static final long serialVersionUID = 1L;
 
 	@JsonFormat(pattern = "dd/MM/yyyy")
@@ -19,10 +19,10 @@ public class PagamentoBoleto extends Pagamento {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataPagamento;
 
-	public PagamentoBoleto() {
+	public PagamentoComBoleto() {
 	}
 
-	public PagamentoBoleto(Integer id, EstadoPagamento estado, Pedido pedido, Date dataVencimento,
+	public PagamentoComBoleto(Integer id, EstadoPagamento estado, Pedido pedido, Date dataVencimento,
 			Date dataPagamento) {
 		super(id, estado, pedido);
 		this.dataPagamento = dataPagamento;

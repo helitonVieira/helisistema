@@ -2,20 +2,22 @@ package com.helitonvieira.helisistema.dto;
 
 import java.io.Serializable;
 
-import com.helitonvieira.helisistema.domain.Estado;
+import com.helitonvieira.helisistema.domain.Produto;
 
-public class EstadoDTO implements Serializable {
+public class ProdutoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
 	private String nome;
+	private Double preco;
 	
-	public EstadoDTO() {
+	public ProdutoDTO() {
 	}
 
-	public EstadoDTO(Estado obj) {
+	public ProdutoDTO(Produto obj) {
 		id = obj.getId();
 		nome = obj.getNome();
+		preco = obj.getPreco();
 	}
 	
 	public Integer getId() {
@@ -32,5 +34,13 @@ public class EstadoDTO implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public Double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(Double preco) {
+		this.preco = preco;
 	}
 }

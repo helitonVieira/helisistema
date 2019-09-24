@@ -8,15 +8,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import com.helitonvieira.helisistema.domain.Cliente;
 import com.helitonvieira.helisistema.domain.ItemPedido;
-import com.helitonvieira.helisistema.domain.PagamentoBoleto;
+import com.helitonvieira.helisistema.domain.PagamentoComBoleto;
 import com.helitonvieira.helisistema.domain.Pedido;
-import com.helitonvieira.helisistema.domain.Pessoa;
 import com.helitonvieira.helisistema.domain.enums.EstadoPagamento;
 import com.helitonvieira.helisistema.repositories.ItemPedidoRepository;
-import com.helitonvieira.helisistema.repositories.PagamentoPedidoRepository;
+import com.helitonvieira.helisistema.repositories.PagamentoRepository;
 import com.helitonvieira.helisistema.repositories.PedidoRepository;
 import com.helitonvieira.helisistema.security.UserSS;
 import com.helitonvieira.helisistema.services.exceptions.AuthorizationException;
@@ -24,7 +23,7 @@ import com.helitonvieira.helisistema.services.exceptions.ObjectNotFoundException
 
 @Service
 public class PedidoService {
-
+	
 	@Autowired
 	private PedidoRepository repo;
 	
@@ -32,47 +31,45 @@ public class PedidoService {
 	private BoletoService boletoService;
 	
 	@Autowired
-	private PagamentoPedidoRepository pagamentoPedidoRepository;
+	private PagamentoRepository pagamentoRepository;
 	
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
 	
 	@Autowired
-	private ItemService itemService;
+	private ProdutoService produtoService;
 	
 	@Autowired
-	private PessoaService pessoaService;
+	private ClienteService clienteService;
 	
 	@Autowired
 	private EmailService emailService;
-
+	
 	public Pedido find(Integer id) {
 		Optional<Pedido> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado Codigo: " + id + ", Tipo: = " + Pedido.class.getName()));
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
 	}
 	
-	@Transactional
 	public Pedido insert(Pedido obj) {
-		obj.setCod_pedido(null);
-		obj.setDta_pedido(new Date());
-		obj.setCod_pessoa_cliente(pessoaService.find(obj.getCod_pessoa_cliente().getCod_pessoa()));
-		obj.setCod_pessoa_vendedor(pessoaService.find(obj.getCod_pessoa_vendedor().getCod_pessoa()));
-		obj.getPagamento().setCod_estado_pagto(EstadoPagamento.PENDENTE);
-		obj.getPagamento().setCod_pedido(obj);
-		if (obj.getPagamento() instanceof PagamentoBoleto) {
-			PagamentoBoleto pagto = (PagamentoBoleto) obj.getPagamento();
-			boletoService.preencherPagamentoBoleto(pagto, obj.getDta_pedido());
+		obj.setId(null);
+		obj.setInstante(new Date());
+		obj.setCliente(clienteService.find(obj.getCliente().getId()));
+		obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
+		obj.getPagamento().setPedido(obj);
+		if (obj.getPagamento() instanceof PagamentoComBoleto) {
+			PagamentoComBoleto pagto = (PagamentoComBoleto) obj.getPagamento();
+			boletoService.preencherPagamentoComBoleto(pagto, obj.getInstante());
 		}
 		obj = repo.save(obj);
-		pagamentoPedidoRepository.save(obj.getPagamento());
-		for (ItemPedido ip : obj.getCod_item_pedido()) {
-			ip.setVal_desconto(0.0);
-			ip.setCod_item(itemService.find(ip.getCod_item().getCod_item()));
-			ip.setVal_total_item(ip.getCod_item().getVal_preco_venda());
-			ip.setCod_Pedido(obj);
+		pagamentoRepository.save(obj.getPagamento());
+		for (ItemPedido ip : obj.getItens()) {
+			ip.setDesconto(0.0);
+			ip.setProduto(produtoService.find(ip.getProduto().getId()));
+			ip.setPreco(ip.getProduto().getPreco());
+			ip.setPedido(obj);
 		}
-		itemPedidoRepository.saveAll(obj.getCod_item_pedido());
+		itemPedidoRepository.saveAll(obj.getItens());
 		emailService.sendOrderConfirmationEmail(obj);
 		return obj;
 	}
@@ -83,7 +80,7 @@ public class PedidoService {
 			throw new AuthorizationException("Acesso negado");
 		}
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		Pessoa pessoa =  pessoaService.find(user.getId());
-		return repo.findByPessoa(pessoa, pageRequest);
+		Cliente cliente =  clienteService.find(user.getId());
+		return repo.findByCliente(cliente, pageRequest);
 	}
 }

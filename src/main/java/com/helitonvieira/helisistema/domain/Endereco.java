@@ -16,108 +16,108 @@ public class Endereco implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer cod_endereco;
-	private String des_logradouro;
-	private String des_num_logradouro;
-	private String des_complemento;
-	private String des_bairro;
-	private String num_cep;
-
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer id;
+	private String logradouro;
+	private String numero;
+	private String complemento;
+	private String bairro;
+	private String cep;
+	
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "cod_pessoa")
-	private Pessoa cod_pessoa;
-
+	@JoinColumn(name="cliente_id")
+	private Cliente cliente;
+	
 	@ManyToOne
-	@JoinColumn(name = "cod_cidade")
-	private Cidade cod_cidade;
-
-	public Endereco(Integer cod_endereco, String des_logradouro, String des_num_logradouro, String des_complemento,
-			String des_bairro, String num_cep, Pessoa cod_pessoa, Cidade cod_cidade) {
-		super();
-		this.cod_endereco = cod_endereco;
-		this.des_logradouro = des_logradouro;
-		this.des_num_logradouro = des_num_logradouro;
-		this.des_complemento = des_complemento;
-		this.des_bairro = des_bairro;
-		this.num_cep = num_cep;
-		this.cod_pessoa = cod_pessoa;
-		this.cod_cidade = cod_cidade;
-	}
-
+	@JoinColumn(name="cidade_id")
+	private Cidade cidade;
+	
 	public Endereco() {
 	}
 
-	public Integer getCod_endereco() {
-		return cod_endereco;
+	public Endereco(Integer id, String logradouro, String numero, String complemento, String bairro, String cep,
+			Cliente cliente, Cidade cidade) {
+		super();
+		this.id = id;
+		this.logradouro = logradouro;
+		this.numero = numero;
+		this.complemento = complemento;
+		this.bairro = bairro;
+		this.cep = cep;
+		this.cliente = cliente;
+		this.setCidade(cidade);
 	}
 
-	public void setCod_endereco(Integer cod_endereco) {
-		this.cod_endereco = cod_endereco;
+	public Integer getId() {
+		return id;
 	}
 
-	public String getDes_logradouro() {
-		return des_logradouro;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public void setDes_logradouro(String des_logradouro) {
-		this.des_logradouro = des_logradouro;
+	public String getLogradouro() {
+		return logradouro;
 	}
 
-	public String getDes_num_logradouro() {
-		return des_num_logradouro;
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
 	}
 
-	public void setDes_num_logradouro(String des_num_logradouro) {
-		this.des_num_logradouro = des_num_logradouro;
+	public String getNumero() {
+		return numero;
 	}
 
-	public String getDes_complemento() {
-		return des_complemento;
+	public void setNumero(String numero) {
+		this.numero = numero;
 	}
 
-	public void setDes_complemento(String des_complemento) {
-		this.des_complemento = des_complemento;
+	public String getComplemento() {
+		return complemento;
 	}
 
-	public String getDes_bairro() {
-		return des_bairro;
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
 	}
 
-	public void setDes_bairro(String des_bairro) {
-		this.des_bairro = des_bairro;
+	public String getBairro() {
+		return bairro;
 	}
 
-	public String getNum_cep() {
-		return num_cep;
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
 	}
 
-	public void setNum_cep(String num_cep) {
-		this.num_cep = num_cep;
+	public String getCep() {
+		return cep;
 	}
 
-	public Pessoa getCod_pessoa() {
-		return cod_pessoa;
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 
-	public void setCod_pessoa(Pessoa cod_pessoa) {
-		this.cod_pessoa = cod_pessoa;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
-	public Cidade getCod_cidade() {
-		return cod_cidade;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
-	public void setCod_cidade(Cidade cod_cidade) {
-		this.cod_cidade = cod_cidade;
+	public Cidade getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((cod_endereco == null) ? 0 : cod_endereco.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -130,12 +130,11 @@ public class Endereco implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Endereco other = (Endereco) obj;
-		if (cod_endereco == null) {
-			if (other.cod_endereco != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!cod_endereco.equals(other.cod_endereco))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
-
 }

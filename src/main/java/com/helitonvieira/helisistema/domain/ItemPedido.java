@@ -1,6 +1,8 @@
 package com.helitonvieira.helisistema.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -10,53 +12,48 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class ItemPedido implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	@JsonIgnore
 	@EmbeddedId
 	private ItemPedidoPK id = new ItemPedidoPK();
-
-	private Double val_desconto;
-	private Double val_acrescimo;
-	private Integer qtd_item;
-	private Double val_total_item;
-	private Integer cod_barra;
-
+	
+	private Double desconto;
+	private Integer quantidade;
+	private Double preco;
+	
 	public ItemPedido() {
 	}
 
-	public ItemPedido(Pedido cod_pedido, Item cod_item, Double val_desconto, Double val_acrescimo, Integer qtd_item,
-			Double val_total_item, Integer cod_barra) {
+	public ItemPedido(Pedido pedido, Produto produto, Double desconto, Integer quantidade, Double preco) {
 		super();
-		id.setCod_pedido(cod_pedido);
-		id.setCod_item(cod_item);
-		this.val_desconto = val_desconto;
-		this.val_acrescimo = val_acrescimo;
-		this.qtd_item = qtd_item;
-		this.val_total_item = val_total_item;
-		this.cod_barra = cod_barra;
+		id.setPedido(pedido);
+		id.setProduto(produto);
+		this.desconto = desconto;
+		this.quantidade = quantidade;
+		this.preco = preco;
 	}
-	
+
 	public double getSubTotal() {
-		return (val_total_item - val_desconto + val_acrescimo) * qtd_item;
-	}
-
-	@JsonIgnore
-	public Pedido getCod_pedido() {
-		return id.getCod_pedido();
-	}
-
-	public void setCod_Pedido(Pedido cod_pedido) {
-		id.setCod_pedido(cod_pedido);
-	}
-		
-	public Item getCod_item() {
-		return id.getCod_item();
+		return (preco - desconto) * quantidade;
 	}
 	
-	public void setCod_item(Item cod_item) {
-		id.setCod_item(cod_item);
+	@JsonIgnore
+	public Pedido getPedido() {
+		return id.getPedido();
 	}
-
+	
+	public void setPedido(Pedido pedido) {
+		id.setPedido(pedido);
+	}
+	
+	public Produto getProduto() {
+		return id.getProduto();
+	}
+	
+	public void setProduto(Produto produto) {
+		id.setProduto(produto);
+	}
+	
 	public ItemPedidoPK getId() {
 		return id;
 	}
@@ -65,44 +62,28 @@ public class ItemPedido implements Serializable {
 		this.id = id;
 	}
 
-	public Double getVal_desconto() {
-		return val_desconto;
+	public Double getDesconto() {
+		return desconto;
 	}
 
-	public void setVal_desconto(Double val_desconto) {
-		this.val_desconto = val_desconto;
+	public void setDesconto(Double desconto) {
+		this.desconto = desconto;
 	}
 
-	public Double getVal_acrescimo() {
-		return val_acrescimo;
+	public Integer getQuantidade() {
+		return quantidade;
 	}
 
-	public void setVal_acrescimo(Double val_acrescimo) {
-		this.val_acrescimo = val_acrescimo;
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
 	}
 
-	public Integer getQtd_item() {
-		return qtd_item;
+	public Double getPreco() {
+		return preco;
 	}
 
-	public void setQtd_item(Integer qtd_item) {
-		this.qtd_item = qtd_item;
-	}
-
-	public Double getVal_total_item() {
-		return val_total_item;
-	}
-
-	public void setVal_total_item(Double val_total_item) {
-		this.val_total_item = val_total_item;
-	}
-
-	public Integer getCod_barra() {
-		return cod_barra;
-	}
-
-	public void setCod_barra(Integer cod_barra) {
-		this.cod_barra = cod_barra;
+	public void setPreco(Double preco) {
+		this.preco = preco;
 	}
 
 	@Override
@@ -129,5 +110,19 @@ public class ItemPedido implements Serializable {
 			return false;
 		return true;
 	}
-
+	
+	@Override
+	public String toString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		StringBuilder builder = new StringBuilder();
+		builder.append(getProduto().getNome());
+		builder.append(", Qte: ");
+		builder.append(getQuantidade());
+		builder.append(", Preço unitário: ");
+		builder.append(nf.format(getPreco()));
+		builder.append(", Subtotal: ");
+		builder.append(nf.format(getSubTotal()));
+		builder.append("\n");
+		return builder.toString();
+	}
 }

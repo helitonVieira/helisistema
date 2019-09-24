@@ -1,4 +1,4 @@
-	package com.helitonvieira.helisistema.dto;
+package com.helitonvieira.helisistema.dto;
 
 import java.io.Serializable;
 
@@ -7,32 +7,30 @@ import com.helitonvieira.helisistema.domain.Cidade;
 public class CidadeDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private Integer cod_cidade;
-	private String nom_cidade;
-	
+	private Integer id;
+	private String nome;
+
 	public CidadeDTO() {
 	}
 
 	public CidadeDTO(Cidade obj) {
-		cod_cidade = obj.getCod_cidade();
-		nom_cidade = obj.getNom_cidade();
+		id = obj.getId();
+		nome = obj.getNome();
 	}
 
-	public Integer getCod_cidade() {
-		return cod_cidade;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setCod_cidade(Integer cod_cidade) {
-		this.cod_cidade = cod_cidade;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public String getNom_cidade() {
-		return nom_cidade;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setNom_cidade(String nom_cidade) {
-		this.nom_cidade = nom_cidade;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
-
-	
 }

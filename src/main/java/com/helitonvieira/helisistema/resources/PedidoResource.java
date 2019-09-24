@@ -4,9 +4,6 @@ import java.net.URI;
 
 import javax.validation.Valid;
 
-//import java.util.ArrayList;
-//import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -22,13 +19,13 @@ import com.helitonvieira.helisistema.domain.Pedido;
 import com.helitonvieira.helisistema.services.PedidoService;
 
 @RestController
-@RequestMapping(value = "/pedidos")
+@RequestMapping(value="/pedidos")
 public class PedidoResource {
-
+	
 	@Autowired
 	private PedidoService service;
-
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Pedido> find(@PathVariable Integer id) {
 		Pedido obj = service.find(id);
 		return ResponseEntity.ok().body(obj);

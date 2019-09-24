@@ -5,8 +5,8 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 
+import com.helitonvieira.helisistema.domain.Cliente;
 import com.helitonvieira.helisistema.domain.Pedido;
-import com.helitonvieira.helisistema.domain.Pessoa;
 
 public abstract class AbstractEmailService implements EmailService {
 	
@@ -21,28 +21,27 @@ public abstract class AbstractEmailService implements EmailService {
 
 	protected SimpleMailMessage prepareSimpleMailMessageFromPedido(Pedido obj) {
 		SimpleMailMessage sm = new SimpleMailMessage();
-		sm.setTo(obj.getCod_pessoa_cliente().getDes_email());
+		sm.setTo(obj.getCliente().getEmail());
 		sm.setFrom(sender);
-		sm.setSubject("Pedido confirmado! Código: " + obj.getCod_pedido());
+		sm.setSubject("Pedido confirmado! Código: " + obj.getId());
 		sm.setSentDate(new Date(System.currentTimeMillis()));
 		sm.setText(obj.toString());
 		return sm;
 	}
 	
 	@Override
-	public void sendNewPasswordEmail(Pessoa pessoa, String newPass) {
-		SimpleMailMessage sm = prepareNewPasswordEmail(pessoa, newPass);
+	public void sendNewPasswordEmail(Cliente cliente, String newPass) {
+		SimpleMailMessage sm = prepareNewPasswordEmail(cliente, newPass);
 		sendEmail(sm);
 	}
 	
-	protected SimpleMailMessage prepareNewPasswordEmail(Pessoa pessoa, String newPass) {
+	protected SimpleMailMessage prepareNewPasswordEmail(Cliente cliente, String newPass) {
 		SimpleMailMessage sm = new SimpleMailMessage();
-		//sm.setTo(pessoa.getDes_email());
+		sm.setTo(cliente.getEmail());
 		sm.setFrom(sender);
 		sm.setSubject("Solicitação de nova senha");
 		sm.setSentDate(new Date(System.currentTimeMillis()));
 		sm.setText("Nova senha: " + newPass);
 		return sm;
 	}
-
 }

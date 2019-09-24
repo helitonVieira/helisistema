@@ -11,41 +11,33 @@ public class ItemPedidoPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne
-	@JoinColumn(name = "cod_pedido")
-	private Pedido cod_pedido;
-
+	@JoinColumn(name="pedido_id")
+	private Pedido pedido;
+	
 	@ManyToOne
-	@JoinColumn(name = "cod_item")
-	private Item cod_item;
-
-	public ItemPedidoPK() {
-			}
-
-	public Pedido getCod_pedido() {
-		return cod_pedido;
+	@JoinColumn(name="produto_id")
+	private Produto produto;
+	
+	public Pedido getPedido() {
+		return pedido;
 	}
-
-	public void setCod_pedido(Pedido cod_pedido) {
-		this.cod_pedido = cod_pedido;
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
 	}
-
-	public Item getCod_item() {
-		return cod_item;
+	public Produto getProduto() {
+		return produto;
 	}
-
-	public void setCod_item(Item cod_item) {
-		this.cod_item = cod_item;
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((cod_item == null) ? 0 : cod_item.hashCode());
-		result = prime * result + ((cod_pedido == null) ? 0 : cod_pedido.hashCode());
+		result = prime * result + ((pedido == null) ? 0 : pedido.hashCode());
+		result = prime * result + ((produto == null) ? 0 : produto.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -55,17 +47,16 @@ public class ItemPedidoPK implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		ItemPedidoPK other = (ItemPedidoPK) obj;
-		if (cod_item == null) {
-			if (other.cod_item != null)
+		if (pedido == null) {
+			if (other.pedido != null)
 				return false;
-		} else if (!cod_item.equals(other.cod_item))
+		} else if (!pedido.equals(other.pedido))
 			return false;
-		if (cod_pedido == null) {
-			if (other.cod_pedido != null)
+		if (produto == null) {
+			if (other.produto != null)
 				return false;
-		} else if (!cod_pedido.equals(other.cod_pedido))
+		} else if (!produto.equals(other.produto))
 			return false;
 		return true;
 	}
-	
 }

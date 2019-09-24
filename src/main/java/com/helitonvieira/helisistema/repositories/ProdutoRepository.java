@@ -10,15 +10,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.helitonvieira.helisistema.domain.Item;
-import com.helitonvieira.helisistema.domain.SubCategoria;
+import com.helitonvieira.helisistema.domain.Categoria;
+import com.helitonvieira.helisistema.domain.Produto;
+
 
 @Repository
-public interface ItemRepository extends JpaRepository<Item, Integer>{
+public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 
 	@Transactional(readOnly=true)
-	@Query("SELECT DISTINCT obj FROM Item obj INNER JOIN obj.cod_subcategoria cat WHERE obj.des_item LIKE %:nome% AND cat IN :subCategorias")
-	Page<Item> findDistinctByNomeContainingAndSubCategoriasIn(@Param("nome") String nome, @Param("subCategorias") List<SubCategoria> categorias, Pageable pageRequest);
-
+	@Query("SELECT DISTINCT obj FROM Produto obj INNER JOIN obj.categorias cat WHERE obj.nome LIKE %:nome% AND cat IN :categorias")
+	Page<Produto> findDistinctByNomeContainingAndCategoriasIn(@Param("nome") String nome, @Param("categorias") List<Categoria> categorias, Pageable pageRequest);
 }
 

@@ -4,11 +4,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.helitonvieira.helisistema.domain.Pessoa;
+import com.helitonvieira.helisistema.domain.Cliente;
 
 @Repository
-public interface PessoaRepository extends JpaRepository<Pessoa, Integer>{
+public interface ClienteRepository extends JpaRepository<Cliente, Integer>{
 	
 	@Transactional(readOnly=true)
-	Pessoa findByEmail(String email);
+	Cliente findByEmail(String email);
 }
+	

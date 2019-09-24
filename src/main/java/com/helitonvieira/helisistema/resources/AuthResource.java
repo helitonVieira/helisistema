@@ -1,4 +1,4 @@
-package com.helitonvieira.helisistema.resources;
+/*package com.helitonvieira.helisistema.resources;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -43,4 +43,4 @@ public class AuthResource {
 		return ResponseEntity.noContent().build();
 	}
 
-}
+}*/

@@ -1,8 +1,11 @@
 package com.helitonvieira.helisistema.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -19,116 +22,101 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Pedido implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer cod_pedido;
-
-	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
-	private Date dta_pedido;
-
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "cod_pedido")
-	private PagamentoPedido pagamento;
-
-	@ManyToOne
-	@JoinColumn(name = "cod_pessoa_cliente")
-	private Pessoa cod_pessoa_cliente;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer id;
+	
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
+	private Date instante;
+	
+	@OneToOne(cascade=CascadeType.ALL, mappedBy="pedido")
+	private Pagamento pagamento;
 
 	@ManyToOne
-	@JoinColumn(name = "cod_pessoa_vendedor")
-	private Pessoa cod_pessoa_vendedor;
-
+	@JoinColumn(name="cliente_id")
+	private Cliente cliente;
+	
 	@ManyToOne
-	@JoinColumn(name = "cod_endereco")
-	private Endereco cod_endereco_entrega;
-
-	@OneToMany(mappedBy = "id.cod_pedido")
-	private Set<ItemPedido> items = new HashSet<>();
-
+	@JoinColumn(name="endereco_de_entrega_id")
+	private Endereco enderecoDeEntrega;
+	
+	@OneToMany(mappedBy="id.pedido")
+	private Set<ItemPedido> itens = new HashSet<>();
+	
 	public Pedido() {
 	}
 
-	public Pedido(Integer cod_pedido, Date dta_pedido, Pessoa cod_pessoa_cliente, Pessoa cod_pessoa_vendedor,
-			Endereco cod_endereco_entrega) {
+	public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
 		super();
-		this.cod_pedido = cod_pedido;
-		this.dta_pedido = dta_pedido;
-		this.cod_pessoa_cliente = cod_pessoa_cliente;
-		this.cod_pessoa_vendedor = cod_pessoa_vendedor;
-		this.cod_endereco_entrega = cod_endereco_entrega;
+		this.id = id;
+		this.instante = instante;
+		this.cliente = cliente;
+		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
-	
+
 	public double getValorTotal() {
 		double soma = 0.0;
-		for (ItemPedido ip : items) {
+		for (ItemPedido ip : itens) {
 			soma = soma + ip.getSubTotal();
 		}
 		return soma;
-	}	
+	}
 	
-	public Integer getCod_pedido() {
-		return cod_pedido;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setCod_pedido(Integer cod_pedido) {
-		this.cod_pedido = cod_pedido;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public Date getDta_pedido() {
-		return dta_pedido;
+	public Date getInstante() {
+		return instante;
 	}
 
-	public void setDta_pedido(Date dta_pedido) {
-		this.dta_pedido = dta_pedido;
+	public void setInstante(Date instante) {
+		this.instante = instante;
 	}
 
-	public PagamentoPedido getPagamento() {
+	public Pagamento getPagamento() {
 		return pagamento;
 	}
 
-	public void setPagamento(PagamentoPedido pagamento) {
+	public void setPagamento(Pagamento pagamento) {
 		this.pagamento = pagamento;
 	}
 
-	public Pessoa getCod_pessoa_cliente() {
-		return cod_pessoa_cliente;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
-	public void setCod_pessoa_cliente(Pessoa cod_pessoa_cliente) {
-		this.cod_pessoa_cliente = cod_pessoa_cliente;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
-	public Pessoa getCod_pessoa_vendedor() {
-		return cod_pessoa_vendedor;
+	public Endereco getEnderecoDeEntrega() {
+		return enderecoDeEntrega;
 	}
 
-	public void setCod_pessoa_vendedor(Pessoa cod_pessoa_vendedor) {
-		this.cod_pessoa_vendedor = cod_pessoa_vendedor;
+	public void setEnderecoDeEntrega(Endereco enderecoDeEntrega) {
+		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
 
-	public Endereco getCod_endereco_entrega() {
-		return cod_endereco_entrega;
+	public Set<ItemPedido> getItens() {
+		return itens;
 	}
 
-	public void setCod_endereco_entrega(Endereco cod_endereco_entrega) {
-		this.cod_endereco_entrega = cod_endereco_entrega;
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
 	}
-
-	public Set<ItemPedido> getCod_item_pedido() {
-		return items;
-	}
-
-	public void setCod_item_pedido(Set<ItemPedido> cod_item_pedido) {
-		this.items = cod_item_pedido;
-	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((cod_pedido == null) ? 0 : cod_pedido.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -141,12 +129,33 @@ public class Pedido implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Pedido other = (Pedido) obj;
-		if (cod_pedido == null) {
-			if (other.cod_pedido != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!cod_pedido.equals(other.cod_pedido))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
-
+	
+	@Override
+	public String toString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		StringBuilder builder = new StringBuilder();
+		builder.append("Pedido número: ");
+		builder.append(getId());
+		builder.append(", Instante: ");
+		builder.append(sdf.format(getInstante()));
+		builder.append(", Cliente: ");
+		builder.append(getCliente().getNome());
+		builder.append(", Situação do pagamento: ");
+		builder.append(getPagamento().getEstado().getDescricao());
+		builder.append("\nDetalhes:\n");
+		for (ItemPedido ip : getItens()) {
+			builder.append(ip.toString());
+		}
+		builder.append("Valor total: ");
+		builder.append(nf.format(getValorTotal()));
+		return builder.toString();
+	}
 }
