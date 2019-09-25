@@ -11,7 +11,7 @@ import com.helitonvieira.helisistema.repositories.ClienteRepository;
 import com.helitonvieira.helisistema.services.exceptions.ObjectNotFoundException;
 
 @Service
-public class AuthService {
+public class AuthService {       
 
 	@Autowired
 	private ClienteRepository clienteRepository;
@@ -24,7 +24,7 @@ public class AuthService {
 	
 	private Random rand = new Random();
 	
-	public void sendNewPassword(String email) {
+	public void sendNewPassword(String email) {   //metodo esqueci a senha mandar para email 
 		
 		Cliente pessoa = clienteRepository.findByEmail(email);
 		if (pessoa == null) {
@@ -46,7 +46,7 @@ public class AuthService {
 		return new String(vet);
 	}
 
-	private char randomChar() {
+	private char randomChar() {       // no google unicode-table ver valor de cada caracter
 		int opt = rand.nextInt(3);
 		if (opt == 0) { // gera um digito
 			return (char) (rand.nextInt(10) + 48);

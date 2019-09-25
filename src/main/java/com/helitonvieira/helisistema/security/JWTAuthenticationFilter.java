@@ -21,9 +21,9 @@ import com.helitonvieira.helisistema.dto.CredenciaisDTO;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-private AuthenticationManager authenticationManager;
+private AuthenticationManager authenticationManager; //verificar se a senha e valida
     
-    private JWTUtil jwtUtil;
+    private JWTUtil jwtUtil;                        //gera o token com o tempo que a senha e valida 
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
     	setAuthenticationFailureHandler(new JWTAuthenticationFailureHandler());

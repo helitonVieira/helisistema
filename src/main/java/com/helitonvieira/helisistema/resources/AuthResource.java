@@ -1,4 +1,4 @@
-/*package com.helitonvieira.helisistema.resources;
+package com.helitonvieira.helisistema.resources;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -19,7 +19,7 @@ import com.helitonvieira.helisistema.services.UserService;
 
 
 @RestController
-@RequestMapping(value = "/auth")
+@RequestMapping(value = "/auth")     
 public class AuthResource {
 
 	@Autowired
@@ -28,8 +28,8 @@ public class AuthResource {
 	@Autowired
 	private AuthService service;
 	
-	@RequestMapping(value = "/refresh_token", method = RequestMethod.POST)
-	public ResponseEntity<Void> refreshToken(HttpServletResponse response) {
+	@RequestMapping(value = "/refresh_token", method = RequestMethod.POST)  //metodo para validar o token  
+	public ResponseEntity<Void> refreshToken(HttpServletResponse response) {   //quando ele esta perto de vencer
 		UserSS user = UserService.authenticated();
 		String token = jwtUtil.generateToken(user.getUsername());
 		response.addHeader("Authorization", "Bearer " + token);
@@ -37,10 +37,10 @@ public class AuthResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@RequestMapping(value = "/forgot", method = RequestMethod.POST)
+	@RequestMapping(value = "/forgot", method = RequestMethod.POST)  //recuperando senha pelo email
 	public ResponseEntity<Void> forgot(@Valid @RequestBody EmailDTO objDto) {
 		service.sendNewPassword(objDto.getEmail());
 		return ResponseEntity.noContent().build();
 	}
 
-}*/
+}
